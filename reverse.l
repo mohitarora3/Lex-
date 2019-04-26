@@ -1,38 +1,20 @@
 %{
-
-#include<stdio.h>
-#include<string.h>
-char *src;
-char temp;
-
-void reverseString(char *src)
-{
-	for(int i=0,j=strlen(src)-1;i<j;i++,j--)
-		{
-		temp=src[i];
-		src[i]=src[j];
-		src[j]=temp;
-		}
-}
+	char *string;
 
 %}
+longest [a-zA-z]{8,}
+
 %%
+{longest}  {string="yytext";}
 
-(.)* { src=(char *)malloc(sizeof(char)*yyleng);
-		 strcpy(src,yytext);
-		 reverseString(src);
-		 printf("Reverse string is %s\n",src);
-		 }
-		 
 %%
-int yywrap(){}
-
-
-
-int main()
-{
+#include<stdio.h>
+#include<string.h>
+void main(){
 	yylex();
-	return 0;
+	printf("Longest string is =%s\n",string);
+	printf("Longest string in reverse is =%s\n",strrev(string));
+
 }
-
-
+int yywrap(void){return 1;}
+// /*
